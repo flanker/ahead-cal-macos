@@ -9,8 +9,9 @@ import SwiftUI
 
 @main
 struct AheadCalApp: App {
+
     var body: some Scene {
-        WindowGroup {
+        MenuBarExtra("AheadCal", systemImage: "calendar") {
             ContentView()
         }
     }
