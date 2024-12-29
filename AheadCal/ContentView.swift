@@ -8,14 +8,113 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var currentDate = Date()
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        VStack(spacing: 15) {
+            HStack {
+                Button(action: { /* 上个月 */ }) {
+                    Image(systemName: "chevron.left")
+                }
+                .buttonStyle(.plain)
+
+                Spacer()
+                Text("Today")
+                    .foregroundStyle(.secondary)
+                Spacer()
+
+                Button(action: { /* 下个月 */ }) {
+                    Image(systemName: "chevron.right")
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.horizontal)
+
+            VStack(spacing: 20) {
+                CalendarMonthView(date: currentDate)
+                CalendarMonthView(date: Calendar.current.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate)
+            }
         }
-        .padding()
+        .padding(10)
+        .background(.background)
+        .frame(width: 240)
+    }
+}
+
+struct CalendarMonthView: View {
+    let date: Date
+    private let calendar = Calendar.current
+
+    private var days: [Date?] {
+        let components = calendar.dateComponents([.year, .month], from: date)
+        guard let startOfMonth = calendar.date(from: components),
+              let range = calendar.range(of: .day, in: .month, for: startOfMonth)
+        else { return [] }
+
+        let firstWeekday = calendar.component(.weekday, from: startOfMonth)
+        let offsetDays = firstWeekday - 1
+
+        return (0..<42).map { day in
+            let calculatedDate = calendar.date(byAdding: .day, value: day - offsetDays, to: startOfMonth)
+            if let date = calculatedDate, isCurrentMonth(date) {
+                return date
+            }
+            return nil
+        }
+    }
+
+    private func isCurrentMonth(_ date: Date) -> Bool {
+        calendar.isDate(date, equalTo: self.date, toGranularity: .month)
+    }
+
+    private func isHoliday(_ date: Date) -> Bool {
+        let components = calendar.dateComponents([.month, .day], from: date)
+        guard let month = components.month, let day = components.day else { return false }
+
+        // 2025年节假日
+        let holidays: [(month: Int, day: Int)] = [
+            (1, 1),  // 元旦
+            (1, 28), // 春节
+            (1, 29),
+            (1, 30),
+            (1, 31),
+            (2, 1),
+            (2, 2),
+            (2, 3),
+            (2, 4)
+        ]
+
+        return holidays.contains { $0.month == month && $0.day == day }
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(date.formatted(.dateTime.month(.wide).year()))
+                .font(.headline)
+                .foregroundStyle(.primary)
+
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 8) {
+                ForEach(Array(days.enumerated()), id: \.offset) { _, date in
+                    if let date = date {
+                        let isHolidayDate = calendar.isDateInWeekend(date) || isHoliday(date)
+                        let isToday = calendar.isDateInToday(date)
+
+                        Text("\(calendar.component(.day, from: date))")
+                            .font(.caption)
+                            .frame(maxWidth: .infinity)
+                            .foregroundStyle(isToday ? .white : (isHolidayDate ? .red : .primary))
+                            .background(
+                                Circle()
+                                    .fill(isToday ? (isHolidayDate ? Color.red.opacity(0.8) : .blue) : .clear)
+                                    .frame(width: 24, height: 24)
+                            )
+                    } else {
+                        Text("")
+                            .frame(maxWidth: .infinity)
+                    }
+                }
+            }
+        }
     }
 }
 

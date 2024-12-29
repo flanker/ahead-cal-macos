@@ -11,8 +11,9 @@ import SwiftUI
 struct AheadCalApp: App {
 
     var body: some Scene {
-        MenuBarExtra("AheadCal", systemImage: "calendar") {
+        MenuBarExtra("Calendar", systemImage: "calendar") {
             ContentView()
         }
+        .menuBarExtraStyle(.window)
     }
 }
