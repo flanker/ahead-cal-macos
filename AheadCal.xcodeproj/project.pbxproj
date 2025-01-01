@@ -6,14 +6,65 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		2BE81C1F2D24CC0E00A32DBC /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE81C1E2D24CC0E00A32DBC /* WidgetKit.framework */; };
+		2BE81C212D24CC0E00A32DBC /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE81C202D24CC0E00A32DBC /* SwiftUI.framework */; };
+		2BE81C2F2D24CC0F00A32DBC /* AheadCalWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2BE81C1C2D24CC0E00A32DBC /* AheadCalWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2BE81C2D2D24CC0F00A32DBC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2BE10BF62D218765006C9DC6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2BE81C1B2D24CC0E00A32DBC;
+			remoteInfo = AheadCalWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2BE81C302D24CC0F00A32DBC /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2BE81C2F2D24CC0F00A32DBC /* AheadCalWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		2BE10BFE2D218765006C9DC6 /* AheadCal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AheadCal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE81C1C2D24CC0E00A32DBC /* AheadCalWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AheadCalWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE81C1E2D24CC0E00A32DBC /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		2BE81C202D24CC0E00A32DBC /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		2BE81C332D24CC0F00A32DBC /* Exceptions for "AheadCalWidget" folder in "AheadCalWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 2BE81C1B2D24CC0E00A32DBC /* AheadCalWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		2BE10C002D218765006C9DC6 /* AheadCal */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = AheadCal;
+			sourceTree = "<group>";
+		};
+		2BE81C222D24CC0E00A32DBC /* AheadCalWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				2BE81C332D24CC0F00A32DBC /* Exceptions for "AheadCalWidget" folder in "AheadCalWidgetExtension" target */,
+			);
+			path = AheadCalWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -26,6 +77,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2BE81C192D24CC0E00A32DBC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BE81C212D24CC0E00A32DBC /* SwiftUI.framework in Frameworks */,
+				2BE81C1F2D24CC0E00A32DBC /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -33,6 +93,8 @@
 			isa = PBXGroup;
 			children = (
 				2BE10C002D218765006C9DC6 /* AheadCal */,
+				2BE81C222D24CC0E00A32DBC /* AheadCalWidget */,
+				2BE81C1D2D24CC0E00A32DBC /* Frameworks */,
 				2BE10BFF2D218765006C9DC6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,8 +103,18 @@
 			isa = PBXGroup;
 			children = (
 				2BE10BFE2D218765006C9DC6 /* AheadCal.app */,
+				2BE81C1C2D24CC0E00A32DBC /* AheadCalWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		2BE81C1D2D24CC0E00A32DBC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2BE81C1E2D24CC0E00A32DBC /* WidgetKit.framework */,
+				2BE81C202D24CC0E00A32DBC /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -55,10 +127,12 @@
 				2BE10BFA2D218765006C9DC6 /* Sources */,
 				2BE10BFB2D218765006C9DC6 /* Frameworks */,
 				2BE10BFC2D218765006C9DC6 /* Resources */,
+				2BE81C302D24CC0F00A32DBC /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				2BE81C2E2D24CC0F00A32DBC /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				2BE10C002D218765006C9DC6 /* AheadCal */,
@@ -69,6 +143,28 @@
 			productName = AheadCal;
 			productReference = 2BE10BFE2D218765006C9DC6 /* AheadCal.app */;
 			productType = "com.apple.product-type.application";
+		};
+		2BE81C1B2D24CC0E00A32DBC /* AheadCalWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BE81C342D24CC0F00A32DBC /* Build configuration list for PBXNativeTarget "AheadCalWidgetExtension" */;
+			buildPhases = (
+				2BE81C182D24CC0E00A32DBC /* Sources */,
+				2BE81C192D24CC0E00A32DBC /* Frameworks */,
+				2BE81C1A2D24CC0E00A32DBC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				2BE81C222D24CC0E00A32DBC /* AheadCalWidget */,
+			);
+			name = AheadCalWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = AheadCalWidgetExtension;
+			productReference = 2BE81C1C2D24CC0E00A32DBC /* AheadCalWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -81,6 +177,9 @@
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					2BE10BFD2D218765006C9DC6 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					2BE81C1B2D24CC0E00A32DBC = {
 						CreatedOnToolsVersion = 16.2;
 					};
 				};
@@ -100,12 +199,20 @@
 			projectRoot = "";
 			targets = (
 				2BE10BFD2D218765006C9DC6 /* AheadCal */,
+				2BE81C1B2D24CC0E00A32DBC /* AheadCalWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		2BE10BFC2D218765006C9DC6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BE81C1A2D24CC0E00A32DBC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +229,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2BE81C182D24CC0E00A32DBC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2BE81C2E2D24CC0F00A32DBC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2BE81C1B2D24CC0E00A32DBC /* AheadCalWidgetExtension */;
+			targetProxy = 2BE81C2D2D24CC0F00A32DBC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		2BE10C0B2D218766006C9DC6 /* Debug */ = {
@@ -299,6 +421,64 @@
 			};
 			name = Release;
 		};
+		2BE81C312D24CC0F00A32DBC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = AheadCalWidget/AheadCalWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 595YZ9WBNH;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AheadCalWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AheadCalWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fengzhichao.AheadCal.AheadCalWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		2BE81C322D24CC0F00A32DBC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = AheadCalWidget/AheadCalWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 595YZ9WBNH;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AheadCalWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AheadCalWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fengzhichao.AheadCal.AheadCalWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -316,6 +496,15 @@
 			buildConfigurations = (
 				2BE10C0E2D218766006C9DC6 /* Debug */,
 				2BE10C0F2D218766006C9DC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2BE81C342D24CC0F00A32DBC /* Build configuration list for PBXNativeTarget "AheadCalWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BE81C312D24CC0F00A32DBC /* Debug */,
+				2BE81C322D24CC0F00A32DBC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
