@@ -27,11 +27,12 @@ struct CalendarMonthView: View {
                 ForEach(Array(days(for: date).enumerated()), id: \.offset) { _, date in
                     if let date = date {
                         let isToday = calendar.isDateInToday(date)
+                        let isWeekend = isWeekend(date)
 
                         Text("\(calendar.component(.day, from: date))")
                             .font(.caption2)
                             .frame(maxWidth: .infinity)
-                            .foregroundStyle(isToday ? .white : .primary)
+                            .foregroundStyle(isToday ? .white : (isWeekend ? .red : .primary))
                             .background(
                                 Circle()
                                     .fill(isToday ? .blue : .clear)
@@ -62,6 +63,11 @@ struct CalendarMonthView: View {
             }
             return nil
         }
+    }
+
+    private func isWeekend(_ date: Date) -> Bool {
+        let weekday = calendar.component(.weekday, from: date)
+        return weekday == 1 || weekday == 7  // 1 是周日，7 是周六
     }
 }
 
