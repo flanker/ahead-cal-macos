@@ -8,60 +8,51 @@
 import WidgetKit
 import SwiftUI
 
-struct Provider: AppIntentTimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationAppIntent())
+struct Provider: TimelineProvider {
+    func placeholder(in context: Context) -> CalendarEntry {
+        CalendarEntry(date: Date())
     }
 
-    func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: configuration)
+    func getSnapshot(in context: Context, completion: @escaping (CalendarEntry) -> ()) {
+        let entry = CalendarEntry(date: Date())
+        completion(entry)
     }
-    
-    func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
-        var entries: [SimpleEntry] = []
 
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
+    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
-            entries.append(entry)
-        }
+        let entry = CalendarEntry(date: currentDate)
 
-        return Timeline(entries: entries, policy: .atEnd)
+        // 更新时间设置为每分钟
+        let nextUpdate = Calendar.current.date(byAdding: .minute, value: 1, to: currentDate)!
+        let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
+
+        completion(timeline)
     }
-
-//    func relevances() async -> WidgetRelevances<ConfigurationAppIntent> {
-//        // Generate a list containing the contexts this widget is relevant in.
-//    }
 }
 
-struct SimpleEntry: TimelineEntry {
+struct CalendarEntry: TimelineEntry {
     let date: Date
-    let configuration: ConfigurationAppIntent
 }
 
 struct AheadCalWidgetEntryView : View {
     var entry: Provider.Entry
+    @Environment(\.widgetFamily) var family
 
     var body: some View {
-        VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
-
-            Text("Favorite Emoji:")
-            Text(entry.configuration.favoriteEmoji)
-        }
+        CalendarMonthView(date: entry.date, family: family)
     }
 }
 
+@main
 struct AheadCalWidget: Widget {
     let kind: String = "AheadCalWidget"
 
     var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
+        StaticConfiguration(kind: kind, provider: Provider()) { entry in
             AheadCalWidgetEntryView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget)
         }
+        .configurationDisplayName("Ahead Calendar")
+        .description("Shows current month calendar")
+        .supportedFamilies([.systemSmall, .systemMedium])
     }
 }
