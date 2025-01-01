@@ -9,22 +9,33 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var currentDate = Date()
+    @State private var monthOffset = 0
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
+
+    var displayDate: Date {
+        Calendar.current.date(byAdding: .month, value: monthOffset, to: Date()) ?? Date()
+    }
 
     var body: some View {
         VStack(spacing: 15) {
             HStack {
-                Button(action: { /* 上个月 */ }) {
+                Button(action: { monthOffset -= 1 }) {
                     Image(systemName: "chevron.left")
                 }
                 .buttonStyle(.plain)
 
                 Spacer()
-                Text("Today")
-                    .foregroundStyle(.secondary)
+                Button(action: {
+                    monthOffset = 0
+                    currentDate = Date()
+                }) {
+                    Text("Today")
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
                 Spacer()
 
-                Button(action: { /* 下个月 */ }) {
+                Button(action: { monthOffset += 1 }) {
                     Image(systemName: "chevron.right")
                 }
                 .buttonStyle(.plain)
@@ -32,8 +43,8 @@ struct ContentView: View {
             .padding(.horizontal)
 
             VStack(spacing: 20) {
-                CalendarMonthView(date: currentDate)
-                CalendarMonthView(date: Calendar.current.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate)
+                CalendarMonthView(date: displayDate)
+                CalendarMonthView(date: Calendar.current.date(byAdding: .month, value: 1, to: displayDate) ?? displayDate)
             }
         }
         .padding(10)
