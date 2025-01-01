@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import AheadCalShared
+import WidgetKit
 
 struct ContentView: View {
     @State private var currentDate = Date()
@@ -83,61 +85,6 @@ struct CalendarMonthView: View {
         calendar.isDate(date, equalTo: self.date, toGranularity: .month)
     }
 
-    private func isHoliday(_ date: Date) -> Bool {
-        let components = calendar.dateComponents([.month, .day], from: date)
-        guard let month = components.month, let day = components.day else { return false }
-
-        // 2025年节假日
-        let holidays: [(month: Int, day: Int)] = [
-            (1, 1),  // 元旦
-            (1, 28), // 春节
-            (1, 29),
-            (1, 30),
-            (1, 31),
-            (2, 1),
-            (2, 2),
-            (2, 3),
-            (2, 4),
-            (4, 4), // 清明节
-            (4, 5),
-            (4, 6),
-            (5, 1), // 劳动节
-            (5, 2),
-            (5, 3),
-            (5, 4),
-            (5, 5),
-            (5, 31), // 端午节
-            (6, 1),
-            (6, 2),
-            (10, 1), // 国庆中秋节
-            (10, 2),
-            (10, 3),
-            (10, 4),
-            (10, 5),
-            (10, 6),
-            (10, 7),
-            (10, 8),
-        ]
-
-        return holidays.contains { $0.month == month && $0.day == day }
-    }
-
-    private func isWorkday(_ date: Date) -> Bool {
-        let components = calendar.dateComponents([.month, .day], from: date)
-        guard let month = components.month, let day = components.day else { return false }
-
-        // 2025年补班日期
-        let workdays: [(month: Int, day: Int)] = [
-            (1, 26),  // 春节前补班
-            (2, 8),   // 春节后补班
-            (4, 27),  // 劳动节补班
-            (9, 28),  // 国庆中秋补班
-            (10, 11)  // 国庆中秋补班
-        ]
-
-        return workdays.contains { $0.month == month && $0.day == day }
-    }
-
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(date.formatted(.dateTime.month(.wide).year()))
@@ -147,18 +94,18 @@ struct CalendarMonthView: View {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 8) {
                 ForEach(Array(days.enumerated()), id: \.offset) { _, date in
                     if let date = date {
-                        let isWeekend = calendar.isDateInWeekend(date)
-                        let isHolidayDate = isHoliday(date)
-                        let isWorkdayDate = isWorkday(date)
                         let isToday = calendar.isDateInToday(date)
+                        let isWeekend = calendar.isDateInWeekend(date)
+                        let isHoliday = HolidayStorage.shared.isHoliday(date)
+                        let isWorkday = HolidayStorage.shared.isWorkday(date)
 
                         Text("\(calendar.component(.day, from: date))")
                             .font(.caption)
                             .frame(maxWidth: .infinity)
-                            .foregroundStyle(isToday ? .white : (isHolidayDate || (isWeekend && !isWorkdayDate) ? .red : .primary))
+                            .foregroundStyle(isToday ? .white : (isHoliday || (isWeekend && !isWorkday) ? .red : .primary))
                             .background(
                                 Circle()
-                                    .fill(isToday ? (isHolidayDate || (isWeekend && !isWorkdayDate) ? Color.red.opacity(0.8) : .blue) : .clear)
+                                    .fill(isToday ? (isHoliday || (isWeekend && !isWorkday) ? Color.red.opacity(0.8) : .blue) : .clear)
                                     .frame(width: 24, height: 24)
                             )
                     } else {

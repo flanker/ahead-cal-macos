@@ -1,5 +1,6 @@
 import SwiftUI
 import WidgetKit
+import AheadCalShared
 
 struct CalendarMonthView: View {
     let date: Date
@@ -27,12 +28,14 @@ struct CalendarMonthView: View {
                 ForEach(Array(days(for: date).enumerated()), id: \.offset) { _, date in
                     if let date = date {
                         let isToday = calendar.isDateInToday(date)
-                        let isWeekend = isWeekend(date)
+                        let isWeekend = calendar.isDateInWeekend(date)
+                        let isHoliday = HolidayStorage.shared.isHoliday(date)
+                        let isWorkday = HolidayStorage.shared.isWorkday(date)
 
                         Text("\(calendar.component(.day, from: date))")
                             .font(.caption2)
                             .frame(maxWidth: .infinity)
-                            .foregroundStyle(isToday ? .white : (isWeekend ? .red : .primary))
+                            .foregroundStyle(isToday ? .white : (isHoliday || (isWeekend && !isWorkday) ? .red : .primary))
                             .background(
                                 Circle()
                                     .fill(isToday ? .blue : .clear)
