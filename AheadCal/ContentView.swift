@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var currentDate = Date()
+    let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
 
     var body: some View {
         VStack(spacing: 15) {
@@ -38,6 +39,9 @@ struct ContentView: View {
         .padding(10)
         .background(.background)
         .frame(width: 240)
+        .onReceive(timer) { _ in
+            currentDate = Date()
+        }
     }
 }
 
