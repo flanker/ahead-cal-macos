@@ -122,6 +122,22 @@ struct CalendarMonthView: View {
         return holidays.contains { $0.month == month && $0.day == day }
     }
 
+    private func isWorkday(_ date: Date) -> Bool {
+        let components = calendar.dateComponents([.month, .day], from: date)
+        guard let month = components.month, let day = components.day else { return false }
+
+        // 2025年补班日期
+        let workdays: [(month: Int, day: Int)] = [
+            (1, 26),  // 春节前补班
+            (2, 8),   // 春节后补班
+            (4, 27),  // 劳动节补班
+            (9, 28),  // 国庆中秋补班
+            (10, 11)  // 国庆中秋补班
+        ]
+
+        return workdays.contains { $0.month == month && $0.day == day }
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(date.formatted(.dateTime.month(.wide).year()))
@@ -131,16 +147,18 @@ struct CalendarMonthView: View {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 8) {
                 ForEach(Array(days.enumerated()), id: \.offset) { _, date in
                     if let date = date {
-                        let isHolidayDate = calendar.isDateInWeekend(date) || isHoliday(date)
+                        let isWeekend = calendar.isDateInWeekend(date)
+                        let isHolidayDate = isHoliday(date)
+                        let isWorkdayDate = isWorkday(date)
                         let isToday = calendar.isDateInToday(date)
 
                         Text("\(calendar.component(.day, from: date))")
                             .font(.caption)
                             .frame(maxWidth: .infinity)
-                            .foregroundStyle(isToday ? .white : (isHolidayDate ? .red : .primary))
+                            .foregroundStyle(isToday ? .white : (isHolidayDate || (isWeekend && !isWorkdayDate) ? .red : .primary))
                             .background(
                                 Circle()
-                                    .fill(isToday ? (isHolidayDate ? Color.red.opacity(0.8) : .blue) : .clear)
+                                    .fill(isToday ? (isHolidayDate || (isWeekend && !isWorkdayDate) ? Color.red.opacity(0.8) : .blue) : .clear)
                                     .frame(width: 24, height: 24)
                             )
                     } else {
