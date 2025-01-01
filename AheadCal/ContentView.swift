@@ -42,14 +42,14 @@ struct ContentView: View {
             }
             .padding(.horizontal)
 
-            VStack(spacing: 20) {
+            VStack(spacing: 0) {
                 CalendarMonthView(date: displayDate)
                 CalendarMonthView(date: Calendar.current.date(byAdding: .month, value: 1, to: displayDate) ?? displayDate)
             }
         }
         .padding(10)
         .background(.background)
-        .frame(width: 240)
+        .frame(width: 200)
         .onReceive(timer) { _ in
             currentDate = Date()
         }
