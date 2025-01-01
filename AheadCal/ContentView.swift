@@ -53,6 +53,7 @@ struct ContentView: View {
         .onReceive(timer) { _ in
             currentDate = Date()
         }
+        .background(ScrollViewerHelper(monthOffset: $monthOffset))
     }
 }
 
@@ -154,4 +155,25 @@ struct CalendarMonthView: View {
 
 #Preview {
     ContentView()
+}
+
+struct ScrollViewerHelper: NSViewRepresentable {
+    @Binding var monthOffset: Int
+
+    func makeNSView(context: Context) -> NSView {
+        let view = NSView()
+
+        NSEvent.addLocalMonitorForEvents(matching: .scrollWheel) { event in
+            if event.deltaY > 0 {
+                monthOffset -= 1
+            } else if event.deltaY < 0 {
+                monthOffset += 1
+            }
+            return event
+        }
+
+        return view
+    }
+
+    func updateNSView(_ nsView: NSView, context: Context) {}
 }
