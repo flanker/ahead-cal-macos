@@ -11,3 +11,6 @@ DerivedData/
 
 # Swift Package Manager
 .build/
+
+# build results
+build/

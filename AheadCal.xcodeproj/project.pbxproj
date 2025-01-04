@@ -9,22 +9,15 @@
 /* Begin PBXBuildFile section */
 		2BE81C1F2D24CC0E00A32DBC /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE81C1E2D24CC0E00A32DBC /* WidgetKit.framework */; };
 		2BE81C212D24CC0E00A32DBC /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE81C202D24CC0E00A32DBC /* SwiftUI.framework */; };
-		2BE81C2F2D24CC0F00A32DBC /* AheadCalWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2BE81C1C2D24CC0E00A32DBC /* AheadCalWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2BE81C442D24D3B400A32DBC /* AheadCalShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE81C3C2D24D3B400A32DBC /* AheadCalShared.framework */; };
 		2BE81C452D24D3B400A32DBC /* AheadCalShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE81C3C2D24D3B400A32DBC /* AheadCalShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BE81C4D2D24D4B000A32DBC /* AheadCalShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE81C3C2D24D3B400A32DBC /* AheadCalShared.framework */; };
 		2BE81C4E2D24D4B000A32DBC /* AheadCalShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE81C3C2D24D3B400A32DBC /* AheadCalShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BE81C522D24D4F900A32DBC /* AheadCalShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE81C3C2D24D3B400A32DBC /* AheadCalShared.framework */; };
+		2BE81C8F2D2579CA00A32DBC /* AheadCalWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2BE81C1C2D24CC0E00A32DBC /* AheadCalWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2BE81C2D2D24CC0F00A32DBC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2BE10BF62D218765006C9DC6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2BE81C1B2D24CC0E00A32DBC;
-			remoteInfo = AheadCalWidgetExtension;
-		};
 		2BE81C422D24D3B400A32DBC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2BE10BF62D218765006C9DC6 /* Project object */;
@@ -46,20 +39,23 @@
 			remoteGlobalIDString = 2BE81C3B2D24D3B400A32DBC;
 			remoteInfo = AheadCalShared;
 		};
+		2BE81C552D25360800A32DBC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2BE10BF62D218765006C9DC6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2BE81C1B2D24CC0E00A32DBC;
+			remoteInfo = AheadCalWidgetExtension;
+		};
+		2BE81C902D2579CA00A32DBC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2BE10BF62D218765006C9DC6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2BE81C1B2D24CC0E00A32DBC;
+			remoteInfo = AheadCalWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		2BE81C302D24CC0F00A32DBC /* Embed Foundation Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				2BE81C2F2D24CC0F00A32DBC /* AheadCalWidgetExtension.appex in Embed Foundation Extensions */,
-			);
-			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		2BE81C4A2D24D3B400A32DBC /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -80,6 +76,17 @@
 				2BE81C4E2D24D4B000A32DBC /* AheadCalShared.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BE81C922D2579CA00A32DBC /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2BE81C8F2D2579CA00A32DBC /* AheadCalWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -213,15 +220,16 @@
 				2BE10BFA2D218765006C9DC6 /* Sources */,
 				2BE10BFB2D218765006C9DC6 /* Frameworks */,
 				2BE10BFC2D218765006C9DC6 /* Resources */,
-				2BE81C302D24CC0F00A32DBC /* Embed Foundation Extensions */,
 				2BE81C4A2D24D3B400A32DBC /* Embed Frameworks */,
+				2BE81C922D2579CA00A32DBC /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				2BE81C2E2D24CC0F00A32DBC /* PBXTargetDependency */,
 				2BE81C432D24D3B400A32DBC /* PBXTargetDependency */,
 				2BE81C542D24D4F900A32DBC /* PBXTargetDependency */,
+				2BE81C562D25360800A32DBC /* PBXTargetDependency */,
+				2BE81C912D2579CA00A32DBC /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				2BE10C002D218765006C9DC6 /* AheadCal */,
@@ -371,11 +379,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2BE81C2E2D24CC0F00A32DBC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2BE81C1B2D24CC0E00A32DBC /* AheadCalWidgetExtension */;
-			targetProxy = 2BE81C2D2D24CC0F00A32DBC /* PBXContainerItemProxy */;
-		};
 		2BE81C432D24D3B400A32DBC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2BE81C3B2D24D3B400A32DBC /* AheadCalShared */;
@@ -390,6 +393,16 @@
 			isa = PBXTargetDependency;
 			target = 2BE81C3B2D24D3B400A32DBC /* AheadCalShared */;
 			targetProxy = 2BE81C532D24D4F900A32DBC /* PBXContainerItemProxy */;
+		};
+		2BE81C562D25360800A32DBC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2BE81C1B2D24CC0E00A32DBC /* AheadCalWidgetExtension */;
+			targetProxy = 2BE81C552D25360800A32DBC /* PBXContainerItemProxy */;
+		};
+		2BE81C912D2579CA00A32DBC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2BE81C1B2D24CC0E00A32DBC /* AheadCalWidgetExtension */;
+			targetProxy = 2BE81C902D2579CA00A32DBC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

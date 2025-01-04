@@ -8,6 +8,7 @@
 import WidgetKit
 import SwiftUI
 
+@main
 struct AheadCalWidgetBundle: WidgetBundle {
     var body: some Widget {
         AheadCalWidget()

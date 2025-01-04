@@ -43,7 +43,6 @@ struct AheadCalWidgetEntryView : View {
     }
 }
 
-@main
 struct AheadCalWidget: Widget {
     let kind: String = "AheadCalWidget"
 
