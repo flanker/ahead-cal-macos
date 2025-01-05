@@ -1,8 +1,8 @@
 //
 //  AppIntent.swift
-//  AheadCalWidget
+//  AheadCalExtension
 //
-//  Created by Zhichao Feng on 2025/1/1.
+//  Created by Zhichao Feng on 2025/1/5.
 //
 
 import WidgetKit
