@@ -1,6 +1,6 @@
+import AheadCalShared
 import SwiftUI
 import WidgetKit
-import AheadCalShared
 
 struct CalendarMonthView: View {
     let date: Date
@@ -12,6 +12,13 @@ struct CalendarMonthView: View {
             HStack(alignment: .top, spacing: 16) {
                 monthView(for: date)
                 monthView(for: calendar.date(byAdding: .month, value: 1, to: date) ?? date)
+            }
+        } else if family == .systemLarge {
+            // render 4 months in a grid
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 4), spacing: 16) {
+                ForEach(0..<4) { index in
+                    monthView(for: calendar.date(byAdding: .month, value: index, to: date) ?? date)
+                }
             }
         } else {
             monthView(for: date)
@@ -35,7 +42,11 @@ struct CalendarMonthView: View {
                         Text("\(calendar.component(.day, from: date))")
                             .font(.caption2)
                             .frame(maxWidth: .infinity)
-                            .foregroundStyle(isToday ? .white : (isHoliday || (isWeekend && !isWorkday) ? .red : .primary))
+                            .foregroundStyle(
+                                isToday
+                                    ? .white
+                                    : (isHoliday || (isWeekend && !isWorkday) ? .yellow : .primary)
+                            )
                             .background(
                                 Circle()
                                     .fill(isToday ? .blue : .clear)
@@ -53,15 +64,18 @@ struct CalendarMonthView: View {
     private func days(for date: Date) -> [Date?] {
         let components = calendar.dateComponents([.year, .month], from: date)
         guard let startOfMonth = calendar.date(from: components),
-              let range = calendar.range(of: .day, in: .month, for: startOfMonth)
+            let range = calendar.range(of: .day, in: .month, for: startOfMonth)
         else { return [] }
 
         let firstWeekday = calendar.component(.weekday, from: startOfMonth)
         let offsetDays = firstWeekday - 1
 
         return (0..<42).map { day in
-            let calculatedDate = calendar.date(byAdding: .day, value: day - offsetDays, to: startOfMonth)
-            if let date = calculatedDate, calendar.isDate(date, equalTo: startOfMonth, toGranularity: .month) {
+            let calculatedDate = calendar.date(
+                byAdding: .day, value: day - offsetDays, to: startOfMonth)
+            if let date = calculatedDate,
+                calendar.isDate(date, equalTo: startOfMonth, toGranularity: .month)
+            {
                 return date
             }
             return nil

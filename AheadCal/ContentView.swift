@@ -5,9 +5,15 @@
 //  Created by Zhichao Feng on 2024/12/29.
 //
 
-import SwiftUI
 import AheadCalShared
+import SwiftUI
 import WidgetKit
+
+struct PlainMenuStyle: MenuStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        Menu(configuration)
+    }
+}
 
 struct ContentView: View {
     @State private var currentDate = Date()
@@ -20,13 +26,40 @@ struct ContentView: View {
 
     var body: some View {
         VStack(spacing: 15) {
+            // Header row
+            HStack {
+                Spacer()
+
+                Text("Ahead Cal")
+                    .font(.system(size: 14, weight: .medium))
+
+                Menu {
+                    Button("Exit") {
+                        NSApplication.shared.terminate(nil)
+                    }
+                } label: {
+                    Image(systemName: "ellipsis")
+                        .font(.system(size: 12))
+                        .foregroundStyle(.secondary)
+                }
+                .menuStyle(PlainMenuStyle())
+                .buttonStyle(.plain)
+                .frame(width: 14, height: 14)
+
+                Spacer()
+            }
+            .frame(maxWidth: .infinity)
+
+            // Navigation row
             HStack {
                 Button(action: { monthOffset -= 1 }) {
-                    Image(systemName: "chevron.left")
+                    Image(systemName: "chevron.left.circle")
+                        .foregroundStyle(.secondary)
                 }
                 .buttonStyle(.plain)
 
                 Spacer()
+
                 Button(action: {
                     monthOffset = 0
                     currentDate = Date()
@@ -35,23 +68,27 @@ struct ContentView: View {
                         .foregroundStyle(.secondary)
                 }
                 .buttonStyle(.plain)
+
                 Spacer()
 
                 Button(action: { monthOffset += 1 }) {
-                    Image(systemName: "chevron.right")
+                    Image(systemName: "chevron.right.circle")
+                        .foregroundStyle(.secondary)
                 }
                 .buttonStyle(.plain)
             }
-            .padding(.horizontal)
 
+            // Calendar views
             VStack(spacing: 0) {
                 CalendarMonthView(date: displayDate)
-                CalendarMonthView(date: Calendar.current.date(byAdding: .month, value: 1, to: displayDate) ?? displayDate)
+                CalendarMonthView(
+                    date: Calendar.current.date(byAdding: .month, value: 1, to: displayDate)
+                        ?? displayDate)
             }
         }
         .padding(10)
         .background(.background)
-        .frame(width: 200)
+        .frame(width: 260)
         .onReceive(timer) { _ in
             currentDate = Date()
         }
@@ -66,14 +103,15 @@ struct CalendarMonthView: View {
     private var days: [Date?] {
         let components = calendar.dateComponents([.year, .month], from: date)
         guard let startOfMonth = calendar.date(from: components),
-              let range = calendar.range(of: .day, in: .month, for: startOfMonth)
+            let range = calendar.range(of: .day, in: .month, for: startOfMonth)
         else { return [] }
 
         let firstWeekday = calendar.component(.weekday, from: startOfMonth)
         let offsetDays = firstWeekday - 1
 
         return (0..<42).map { day in
-            let calculatedDate = calendar.date(byAdding: .day, value: day - offsetDays, to: startOfMonth)
+            let calculatedDate = calendar.date(
+                byAdding: .day, value: day - offsetDays, to: startOfMonth)
             if let date = calculatedDate, isCurrentMonth(date) {
                 return date
             }
@@ -86,10 +124,12 @@ struct CalendarMonthView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(date.formatted(.dateTime.month(.wide).year()))
-                .font(.headline)
-                .foregroundStyle(.primary)
+        VStack(alignment: .leading, spacing: 5.0) {
+            let month = date.formatted(.dateTime.month(.abbreviated))
+            let year = String(Calendar.current.component(.year, from: date))
+
+            Text("\(month) \(year)")
+                .font(.system(size: 14, weight: .medium))
 
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 8) {
                 ForEach(Array(days.enumerated()), id: \.offset) { _, date in
@@ -100,17 +140,25 @@ struct CalendarMonthView: View {
                         let isWorkday = HolidayStorage.shared.isWorkday(date)
 
                         Text("\(calendar.component(.day, from: date))")
-                            .font(.caption)
-                            .frame(maxWidth: .infinity)
-                            .foregroundStyle(isToday ? .white : (isHoliday || (isWeekend && !isWorkday) ? .red : .primary))
+                            .font(.system(size: 14))
+                            .frame(width: 24, height: 24)
+                            .foregroundStyle(
+                                isToday
+                                    ? .white
+                                    : (isHoliday || (isWeekend && !isWorkday) ? .red : .primary)
+                            )
                             .background(
                                 Circle()
-                                    .fill(isToday ? (isHoliday || (isWeekend && !isWorkday) ? Color.red.opacity(0.8) : .blue) : .clear)
+                                    .fill(
+                                        isToday
+                                            ? (isHoliday || (isWeekend && !isWorkday)
+                                                ? Color.red.opacity(0.8) : .blue) : .clear
+                                    )
                                     .frame(width: 24, height: 24)
                             )
                     } else {
                         Text("")
-                            .frame(maxWidth: .infinity)
+                            .frame(width: 24, height: 24)
                     }
                 }
             }
